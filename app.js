@@ -1,14 +1,8 @@
-/* ==========================================================
-   Diaries of the Abandoned - Complete Interactive Script
-   Three.js Planet Transitions + NASA Trek Leaflet Radar + Audio
-   ========================================================== */
 
 (function () {
     'use strict';
 
-    // ==========================================================
-    // 1. THREE.JS CELESTIAL GLOBE WITH ATMOSPHERE GLOW
-    // ==========================================================
+
     const T = THREE;
     const cv = document.getElementById('c');
     let R;
@@ -140,9 +134,7 @@
         };
     }
 
-    // ==========================================================
-    // 2. NASA TREK LEAFLET RADAR (WMTS REST ENGINE)
-    // ==========================================================
+
     const initializedMaps = new Set();
 
     function initTrekMap(el) {
@@ -537,9 +529,7 @@
         if (narrationBtn && !narrationBtn.closest('.chapter').classList.contains('on')) stopNarration();
     }, { passive: true });
 
-    // ==========================================================
-    // 9. 3D MODEL LOAD SAFETY (encodes spaces in file names, reports failures)
-    // ==========================================================
+  
     document.querySelectorAll('model-viewer').forEach(mv => {
         const raw = mv.getAttribute('src') || '';
         if (raw && raw.indexOf('%') === -1) mv.setAttribute('src', encodeURI(raw));
