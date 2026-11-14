@@ -1,2 +1,1 @@
-# diaries-of-the-abandoned.
-Diaries of the Abandoned
+# Diaries of the Abandoned
