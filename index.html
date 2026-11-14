@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diaries of the Abandoned - Interactive Space Odyssey</title>
+
+<!-- Typography: Instrument Serif (display) + Newsreader (diary voice) + Archivo (instrument UI) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+
+<!-- Leaflet for NASA Trek Maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Google Model Viewer -->
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Three.js Celestial Globe Background -->
+<canvas id="c"></canvas>
+
+<!-- Subtle Vignette & Scanline overlay -->
+<div class="vignette-overlay"></div>
+
+<!-- Music toggle (floating, bottom-left) -->
+<button id="sound-btn" class="pill-btn sound-fab" aria-label="Toggle background music">
+    <span class="sound-wave"><span></span><span></span><span></span></span>
+    <span class="sound-label">MUSIC: OFF</span>
+</button>
+
+<!-- Side Timeline Navigation Dots -->
+<nav id="nav"></nav>
+
+<main>
+
+<!-- SECTION 0: HERO INTRO -->
+<section class="ch hero on" data-c="0" data-world="moon" data-target="ORBITAL INSERTION">
+    <div class="hero-content">
+        <h1 class="glitch-title">Diaries of the<br><span class="accent-glow">Abandoned.</span></h1>
+        <p class="hero-subtext">Over 190 tons of human ingenuity rest motionless in the silence of the Moon and Mars. These are not relics of failure &mdash; they are humanity's first monuments on worlds beyond our own. Step onto their landing sites, inspect their 3D engineering, and listen to the science they left behind.</p>
+        <div class="hero-actions">
+            <a href="#sec-1" class="explore-btn">
+                <span>BEGIN EXPEDITION</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </a>
+            <div class="scroll-callout">Scroll down to initiate lunar descent</div>
+        </div>
+    </div>
+</section>
+
+<!-- CHAPTER 1: APOLLO LUNAR MODULE (MOON) -->
+<section class="ch chapter moon-theme" id="sec-1" data-c="1" data-world="moon" data-target="TRANQUILITY BASE &bull; MOON">
+    <div class="stage-grid">
+        
+        <!-- Story & Educational Panel -->
+        <div class="card glass-card">
+            <div class="card-glow-bar"></div>
+            <div class="card-header">
+                <span class="tag">Chapter 01 &bull; The Moon &bull; Sea of Tranquility</span>
+                <span class="status-indicator">DORMANT SINCE 1969</span>
+            </div>
+            <h2>Apollo 11 Lunar Module</h2>
+            
+            <div class="diary-quote">
+                "On July 20, 1969, Neil Armstrong and Buzz Aldrin stepped onto the dust beneath my landing pads. When it was time to leave, they fired the ascent stage and left my gold-wrapped base behind as a launchpad. With zero atmosphere, zero wind, and zero rain, the bootprints around my footpads remain as razor-sharp today as the second they were pressed into the ancient dust."
+            </div>
+
+            <!-- NASA Archive Images -->
+            <div class="mission-gallery">
+                <figure>
+                    <img src="assest/image/as11-40-5873~large.jpg" alt="Apollo 11 on the Moon" loading="lazy">
+                    <figcaption>Eagle at Tranquility Base</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/apollo_footprint.jpg" alt="Neil Armstrong Footprint" loading="lazy">
+                    <figcaption>Footprint in Vacuum</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/as11-40-5927~large.jpg" alt="Apollo Experiments" loading="lazy">
+                    <figcaption>Passive Seismometer</figcaption>
+                </figure>
+            </div>
+
+            <ul class="facts">
+                <li><span class="fact-label">Surface Stay</span><b>21 h 36 m</b></li>
+                <li><span class="fact-label">Landing Site</span><b>0.6875&deg; N, 23.4333&deg; E</b></li>
+            </ul>
+
+            <!-- Kid Science Exploration -->
+            <div class="science-box">
+                <button class="science-btn" aria-expanded="false">
+                    <span class="sci-title">Kid Explorer: Learn the Science</span>
+                    <span class="sci-arrow">&plus;</span>
+                </button>
+                <div class="science-body">
+                    <p><strong>Why do footprints last forever?</strong> The Moon has no atmosphere &mdash; no wind, no rain, and no weather erosion! These historic bootprints will remain visible for over 10 million years.</p>
+                    <p><strong>Laser Reflectors:</strong> Apollo 11 left a panel of corner-cube mirrors. Observatories on Earth still shoot green lasers at them today to measure the distance to the Moon within millimeters!</p>
+                </div>
+            </div>
+
+            <div class="since">
+                <span class="since-label">Resting alone on the lunar surface for:</span>
+                <b data-since="1969-07-21T17:54:00Z">Calculating...</b>
+            </div>
+        </div>
+
+        <!-- 3D Hardware Model & NASA Moon Trek Map -->
+        <div class="interactive-panel">
+            
+            <div class="model-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">3D HARDWARE TELEMETRY &bull; DESCENT STAGE</span>
+                    <span class="control-badge">360&deg; ROTATABLE</span>
+                </div>
+                <model-viewer 
+                    src="assest/3d/Apollo Lunar Module.glb" 
+                    alt="Apollo Lunar Module 3D Model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                    shadow-intensity="2"
+                    exposure="1.0"
+                    camera-orbit="45deg 75deg 6m"
+                    min-camera-orbit="auto auto 2m"
+                    max-camera-orbit="auto auto 12m"
+                    loading="eager">
+                </model-viewer>
+                <div class="model-tip">Drag to inspect landing struts &bull; Scroll/Pinch to zoom</div>
+            </div>
+
+            <div class="map-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">LANDING SITE MAP &bull; MOON SURFACE</span>
+                    <span class="coord-badge">0.6875&deg; N, 23.4333&deg; E</span>
+                </div>
+                <div id="map-apollo" class="trek-map" data-lat="0.6875" data-lon="23.4333" data-body="moon"></div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CHAPTER 2: VIKING 1 LANDER (MARS) -->
+<section class="ch chapter mars-theme" id="sec-2" data-c="2" data-world="mars" data-target="CHRYSE PLANITIA &bull; MARS">
+    <div class="stage-grid">
+        
+        <div class="card glass-card">
+            <div class="card-glow-bar"></div>
+            <div class="card-header">
+                <span class="tag">Chapter 02 &bull; Mars &bull; Chryse Planitia</span>
+                <span class="status-indicator">SILENT SINCE 1982</span>
+            </div>
+            <h2>Viking 1 Lander</h2>
+            
+            <div class="diary-quote">
+                "On July 20, 1976 &mdash; seven years to the day after Apollo 11 &mdash; I became the first machine to safely touch down on Mars and transmit color photos. Before me lay a golden plain scattered with red boulders under a butterscotch pink sky. I reached my mechanical scoop into the rust-colored soil to test for biological life, opening humanity's search for Martian microbes."
+            </div>
+
+            <div class="mission-gallery">
+                <figure>
+                    <img src="assest/image/viking_surface.jpg" alt="Viking 1 Mars Surface" loading="lazy">
+                    <figcaption>First Color View of Mars</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/viking_lander_render.jpg" alt="Viking Lander" loading="lazy">
+                    <figcaption>Robotic Laboratory</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/opportunity_tracks.jpg" alt="Red Soil" loading="lazy">
+                    <figcaption>Iron-Rich Soil</figcaption>
+                </figure>
+            </div>
+
+            <ul class="facts">
+                <li><span class="fact-label">Active Lifespan</span><b>2,245 sols</b></li>
+                <li><span class="fact-label">Landing Site</span><b>22.27&deg; N, 47.95&deg; W</b></li>
+            </ul>
+
+            <div class="science-box">
+                <button class="science-btn" aria-expanded="false">
+                    <span class="sci-title">Kid Explorer: Learn the Science</span>
+                    <span class="sci-arrow">&plus;</span>
+                </button>
+                <div class="science-body">
+                    <p><strong>Why is Mars Red?</strong> Mars is literally covered in rust! Iron minerals in the surface rocks oxidized over billions of years, creating red iron-oxide dust that coats the entire planet.</p>
+                    <p><strong>Salmon-Pink Skies:</strong> While Earth's sky is blue because gas molecules scatter sunlight, Mars's thin sky is salmon-pink because fine rust dust particles stay suspended in the atmosphere.</p>
+                </div>
+            </div>
+
+            <div class="since">
+                <span class="since-label">Silent on Chryse Planitia for:</span>
+                <b data-since="1982-11-13T00:00:00Z">Calculating...</b>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <div class="model-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">3D HARDWARE TELEMETRY &bull; THREE-LEGGED LANDER</span>
+                    <span class="control-badge">360&deg; ROTATABLE</span>
+                </div>
+                <model-viewer 
+                    src="assest/3d/Viking Lander.glb" 
+                    alt="Viking Lander 3D Model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                    shadow-intensity="2"
+                    exposure="1.0"
+                    camera-orbit="30deg 70deg 4m"
+                    loading="lazy">
+                </model-viewer>
+                <div class="model-tip">Rotate to view the soil sampling arm and meteorology mast</div>
+            </div>
+
+            <div class="map-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">LANDING SITE MAP &bull; MARS SURFACE</span>
+                    <span class="coord-badge">22.27&deg; N, 47.95&deg; W</span>
+                </div>
+                <div id="map-viking" class="trek-map" data-lat="22.27" data-lon="-47.95" data-body="mars"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CHAPTER 3: OPPORTUNITY ROVER (MARS) -->
+<section class="ch chapter mars-theme" id="sec-3" data-c="3" data-world="mars" data-target="MERIDIANI PLANUM &bull; MARS">
+    <div class="stage-grid">
+        
+        <div class="card glass-card">
+            <div class="card-glow-bar"></div>
+            <div class="card-header">
+                <span class="tag">Chapter 03 &bull; Mars &bull; Meridiani Planum</span>
+                <span class="status-indicator">SILENT SINCE 2018</span>
+            </div>
+            <h2>Opportunity Rover (MER-B)</h2>
+            
+            <div class="diary-quote">
+                "They planned my journey for just 90 days. I drove across Mars for 14 years, traveling 45.16 kilometers &mdash; further than an Olympic marathon on an alien world! I discovered tiny mineral spheres nicknamed 'blueberries' that proved liquid water once drenched this desert. In June 2018, a planet-encircling dust storm blotted out the sun. My final message home was: 'My battery is low and it is getting dark.'"
+            </div>
+
+            <div class="mission-gallery">
+                <figure>
+                    <img src="assest/image/opportunity_selfie.jpg" alt="Opportunity Selfie" loading="lazy">
+                    <figcaption>Selfie on Mars</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/opportunity_tracks.jpg" alt="Opportunity Tracks" loading="lazy">
+                    <figcaption>45 km of Tracks</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/viking_surface.jpg" alt="Endeavour Crater" loading="lazy">
+                    <figcaption>Perseverance Valley</figcaption>
+                </figure>
+            </div>
+
+            <ul class="facts">
+                <li><span class="fact-label">Mission Duration</span><b>5,111 sols (56x Goal)</b></li>
+                <li><span class="fact-label">Odometer Record</span><b>45.16 km</b></li>
+            </ul>
+
+            <div class="science-box">
+                <button class="science-btn" aria-expanded="false">
+                    <span class="sci-title">Kid Explorer: Learn the Science</span>
+                    <span class="sci-arrow">&plus;</span>
+                </button>
+                <div class="science-body">
+                    <p><strong>Martian Blueberries:</strong> Opportunity discovered tiny hematite spheres just a few millimeters across. On Earth, these only form when mineral-rich water soaks through rock!</p>
+                    <p><strong>Dust Storms:</strong> Martian dust storms can grow large enough to encircle the entire planet, blocking 99% of sunlight from reaching solar panels.</p>
+                </div>
+            </div>
+
+            <div class="since">
+                <span class="since-label">Dormant in Perseverance Valley for:</span>
+                <b data-since="2018-06-10T00:00:00Z">Calculating...</b>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <div class="model-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">3D HARDWARE TELEMETRY &bull; ROCKER-BOGIE ROVER</span>
+                    <span class="control-badge">360&deg; ROTATABLE</span>
+                </div>
+                <model-viewer 
+                    src="assest/3d/Mars Exploration Rover - Opportunity (MER-B).glb" 
+                    alt="Opportunity Rover 3D Model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                    shadow-intensity="2"
+                    exposure="1.0"
+                    camera-orbit="40deg 60deg 2m"
+                    loading="lazy">
+                </model-viewer>
+                <div class="model-tip">Rotate to view the 6-wheel suspension and panoramic camera mast</div>
+            </div>
+
+            <div class="map-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">LANDING SITE MAP &bull; MARS SURFACE</span>
+                    <span class="coord-badge">1.95&deg; S, 5.53&deg; W</span>
+                </div>
+                <div id="map-opportunity" class="trek-map" data-lat="-1.95" data-lon="-5.53" data-body="mars"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CHAPTER 4: INSIGHT LANDER (MARS) -->
+<section class="ch chapter mars-theme" id="sec-4" data-c="4" data-world="mars" data-target="ELYSIUM PLANITIA &bull; MARS">
+    <div class="stage-grid">
+        
+        <div class="card glass-card">
+            <div class="card-glow-bar"></div>
+            <div class="card-header">
+                <span class="tag">Chapter 04 &bull; Mars &bull; Elysium Planitia</span>
+                <span class="status-indicator">SILENT SINCE 2022</span>
+            </div>
+            <h2>InSight Lander</h2>
+            
+            <div class="diary-quote">
+                "I was built not to roll, but to listen. I placed a ultra-sensitive seismometer under a wind dome onto the rock and felt the planet's heartbeat. Over four years, I recorded more than 1,300 marsquakes and proved that Mars still rumbles deep within. I discovered that Mars has a giant molten core. In December 2022, after dust buried my solar arrays, my power finally faded."
+            </div>
+
+            <div class="mission-gallery">
+                <figure>
+                    <img src="assest/image/insight_selfie.jpg" alt="InSight Selfie" loading="lazy">
+                    <figcaption>InSight Covered in Dust</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/insight_seismometer.jpg" alt="InSight Seismometer" loading="lazy">
+                    <figcaption>SEIS Seismometer Dome</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/viking_surface.jpg" alt="Elysium Planitia" loading="lazy">
+                    <figcaption>Elysium Plains</figcaption>
+                </figure>
+            </div>
+
+            <ul class="facts">
+                <li><span class="fact-label">Marsquakes Heard</span><b>1,300+ Tremors</b></li>
+                <li><span class="fact-label">Landing Site</span><b>4.50&deg; N, 135.62&deg; E</b></li>
+            </ul>
+
+            <div class="science-box">
+                <button class="science-btn" aria-expanded="false">
+                    <span class="sci-title">Kid Explorer: Learn the Science</span>
+                    <span class="sci-arrow">&plus;</span>
+                </button>
+                <div class="science-body">
+                    <p><strong>Marsquakes:</strong> Earth quakes because tectonic plates crash into each other. Mars quakes because the planet is slowly cooling and contracting, cracking its crust!</p>
+                    <p><strong>Super Hearing:</strong> InSight's SEIS instrument could measure ground vibrations smaller than the radius of a single hydrogen atom.</p>
+                </div>
+            </div>
+
+            <div class="since">
+                <span class="since-label">Resting on Elysium Planitia for:</span>
+                <b data-since="2022-12-21T00:00:00Z">Calculating...</b>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <div class="model-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">3D HARDWARE TELEMETRY &bull; SEISMIC LANDER</span>
+                    <span class="control-badge">360&deg; ROTATABLE</span>
+                </div>
+                <model-viewer 
+                    src="assest/3d/InSight Cruise Lander (arm deployed).glb" 
+                    alt="InSight Lander 3D Model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                    shadow-intensity="2"
+                    exposure="1.0"
+                    camera-orbit="35deg 65deg 5m"
+                    loading="lazy">
+                </model-viewer>
+                <div class="model-tip">Rotate to view the robotic arm and circular solar panels</div>
+            </div>
+
+            <div class="map-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">LANDING SITE MAP &bull; MARS SURFACE</span>
+                    <span class="coord-badge">4.50&deg; N, 135.62&deg; E</span>
+                </div>
+                <div id="map-insight" class="trek-map" data-lat="4.50" data-lon="135.62" data-body="mars"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CHAPTER 5: INGENUITY HELICOPTER (MARS) -->
+<section class="ch chapter mars-theme" id="sec-5" data-c="5" data-world="mars" data-target="JEZERO CRATER &bull; MARS">
+    <div class="stage-grid">
+        
+        <div class="card glass-card">
+            <div class="card-glow-bar"></div>
+            <div class="card-header">
+                <span class="tag">Chapter 05 &bull; Mars &bull; Jezero Crater</span>
+                <span class="status-indicator">GROUNDED SINCE 2024</span>
+            </div>
+            <h2>Ingenuity Mars Helicopter</h2>
+            
+            <div class="diary-quote">
+                "They said powered flight was impossible on Mars because the air is 100 times thinner than on Earth. So my engineers spun my carbon-fiber blades at 2,500 RPM. I was built for 5 short test hops; I flew 72 times! Taped beneath my solar panel is a swatch of muslin from the Wright Brothers' 1903 Flyer. On January 18, 2024, I completed my final flight, proving that aircraft can explore the skies of other worlds."
+            </div>
+
+            <div class="mission-gallery">
+                <figure>
+                    <img src="assest/image/ingenuity_flight.jpg" alt="Ingenuity in flight" loading="lazy">
+                    <figcaption>Airborne over Mars</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/ingenuity_shadow.jpg" alt="Ingenuity shadow" loading="lazy">
+                    <figcaption>Shadow on the Dunes</figcaption>
+                </figure>
+                <figure>
+                    <img src="assest/image/opportunity_tracks.jpg" alt="Jezero terrain" loading="lazy">
+                    <figcaption>Jezero Riverbed</figcaption>
+                </figure>
+            </div>
+
+            <ul class="facts">
+                <li><span class="fact-label">Flight Log</span><b>72 Flights &bull; 17 km Flown</b></li>
+                <li><span class="fact-label">Landing Airfield</span><b>18.44&deg; N, 77.45&deg; E</b></li>
+            </ul>
+
+            <div class="science-box">
+                <button class="science-btn" aria-expanded="false">
+                    <span class="sci-title">Kid Explorer: Learn the Science</span>
+                    <span class="sci-arrow">&plus;</span>
+                </button>
+                <div class="science-body">
+                    <p><strong>Flying in 1% Air:</strong> Mars atmosphere is less than 1% as dense as Earth's! Ingenuity's carbon-fiber blades spin five times faster than an Earth helicopter just to generate enough lift.</p>
+                    <p><strong>Autonomous Pilot:</strong> Radio signals take 5 to 20 minutes to travel from Earth to Mars, so nobody could fly Ingenuity with a joystick. The helicopter flew entirely on its own autopilot!</p>
+                </div>
+            </div>
+
+            <div class="since">
+                <span class="since-label">Resting at Jezero Airfield for:</span>
+                <b data-since="2024-01-18T00:00:00Z">Calculating...</b>
+            </div>
+        </div>
+
+        <div class="interactive-panel">
+            <div class="model-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">3D HARDWARE TELEMETRY &bull; DUAL-ROTOR HELICOPTER</span>
+                    <span class="control-badge">360&deg; ROTATABLE</span>
+                </div>
+                <model-viewer 
+                    src="assest/3d/Ingenuity Mars Helicopter.glb" 
+                    alt="Ingenuity Mars Helicopter 3D Model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                    shadow-intensity="2"
+                    exposure="1.0"
+                    camera-orbit="30deg 55deg 2m"
+                    loading="lazy">
+                </model-viewer>
+                <div class="model-tip">Rotate to view the counter-rotating carbon blades and solar panel</div>
+            </div>
+
+            <div class="map-box glass-card">
+                <div class="panel-topbar">
+                    <span class="panel-title">LANDING SITE MAP &bull; MARS SURFACE</span>
+                    <span class="coord-badge">18.44&deg; N, 77.45&deg; E</span>
+                </div>
+                <div id="map-ingenuity" class="trek-map" data-lat="18.44" data-lon="77.45" data-body="mars"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- EPILOGUE -->
+<section class="ch epilogue" data-c="6" data-world="moon" data-target="MONUMENTS OF HUMANITY">
+    <div class="card epilogue-card glass-card">
+        <div class="card-glow-bar"></div>
+        <span class="tag">Planetary Heritage &bull; First Footsteps</span>
+        <h2>Not Trash. Archaeology.</h2>
+        <p class="epilogue-text">These machines will remain on the Moon and Mars for thousands, perhaps millions of years. When future generations build permanent outposts across the solar system, these historic landing sites will be preserved as the first cultural monuments of humanity's expansion beyond Earth.</p>
+        <p class="epilogue-quote"><strong>"To be abandoned is not to be forgotten."</strong></p>
+    </div>
+</section>
+
+</main>
+
+<!-- Three.js for Background Celestial Globe -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Leaflet JS for NASA Trek WMTS Radar Engine -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
