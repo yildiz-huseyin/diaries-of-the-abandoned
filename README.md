@@ -38,7 +38,11 @@ python -m http.server 8000
 Then open http://localhost:8000 in your browser.
 
 ## Project Structure
-├── index.html # Page structure and chapters
-├── style.css # Styling and layout
-├── app.js # Background, maps, audio, and interactivity
-└── assest/ # Images, 3D models (.glb), and narration audio (.mp3)
+diaries-of-the-abandoned/
+├── index.html          # Page structure and the five mission chapters
+├── style.css           # Styling, layout, and theme colors
+├── app.js              # Three.js background, maps, audio, and interactivity
+└── assest/
+    ├── image/          # NASA photographs, planet textures (moon_hd.jpg, mars_hd.jpg)
+    ├── 3d/             # 3D hardware models (.glb)
+    └── sound/          # Chapter narrations (1.mp3 to 5.mp3)
