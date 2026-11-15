@@ -38,3 +38,7 @@ python -m http.server 8000
 Then open http://localhost:8000 in your browser.
 
 ## Project Structure
+├── index.html # Page structure and chapters
+├── style.css # Styling and layout
+├── app.js # Background, maps, audio, and interactivity
+└── assest/ # Images, 3D models (.glb), and narration audio (.mp3)
